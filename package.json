@@ -1,0 +1,19 @@
+{
+  "name": "nncalc",
+  "version": "0.1.0",
+  "description": "NN size calculator for fully connected feed forward networks",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StoneCypher/nncalc.git"
+  },
+  "author": "John Haugeland <stonecypher@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/StoneCypher/nncalc/issues"
+  },
+  "homepage": "https://github.com/StoneCypher/nncalc#readme"
+}
