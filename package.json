@@ -1,6 +1,6 @@
 {
   "name": "nncalc",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "NN size calculator for fully connected feed forward networks",
   "main": "index.js",
   "scripts": {

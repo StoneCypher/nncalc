@@ -1,17 +1,35 @@
+{
 
-Result
-  = d:Description {
-    const interconnects = [];
-    if (d.length > 1) {
-      for (let top = 1; top < d.length; ++top) {
-        interconnects.push(d[top] * d[top-1]);
-      }
-    }
-    return { layers: d, interconnects };
+  function ast(kind, rem) {
+    const rr = {};
+    Object.assign(rr, rem);
+    rr.kind = kind;
+    return rr;
   }
 
-Description
-  = e:Expression _ (","/";"/"|") _ d:Description { return [].concat(e,d); }
+}
+
+
+
+Document
+  = items:DocumentItem+ _ { return items; }
+
+DocumentItem
+  = LayoutStmt
+  / NodeSizeStmt
+  / InterconnectSizeStmt
+
+NodeSizeStmt
+  = _ 'node size'i _ ':' _ val:Integer _ ';' { return ast('node size', { val }); }
+
+InterconnectSizeStmt
+  = _ 'interconnect size'i _ ':' _ val:Integer _ ';' { return ast('interconnect size', { val }); }
+
+LayoutStmt
+  = _ 'layout'i _ ':' _ val:LayoutSequence _ ';' { return ast('layout', { val }); }
+
+LayoutSequence
+  = e:Expression _ (","/"|") _ l:LayoutSequence { return [].concat(e,l); }
   / Expression
 
 Expression
@@ -38,4 +56,4 @@ Integer "integer"
   = _ [0-9]+ { return parseInt(text(), 10); }
 
 _ "whitespace"
-  = [ \t\n\r\v]* { return { kind: 'ws' } }
+  = val:[ \r\n\t\v]* { return ast('whitespace', val); }
