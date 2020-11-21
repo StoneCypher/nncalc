@@ -7,12 +7,36 @@
     return rr;
   }
 
+  function layers_to_interconnects(layers) {
+    const interconnects = [];
+    if (layers.length > 1) {
+      for (let top = 1; top < layers.length; ++top) {
+        interconnects.push(layers[top] * layers[top-1]);
+      }
+    }
+    return interconnects;
+  }
+
+  function compile(items) {
+
+    const layout_idx = items.find(item => item.kind === 'layout');
+
+    if (layout_idx === undefined) { throw new Error('No layout specified'); }
+
+    const layout        = layout_idx.val,
+          interconnects = layers_to_interconnects(layout);
+
+    return { layout, interconnects };
+
+  }
+
 }
 
 
 
 Document
-  = items:DocumentItem+ _ { return items; }
+  = items:DocumentItem+ _ { return compile(items); }
+//  = items:DocumentItem+ _ { return items; }
 
 DocumentItem
   = LayoutStmt
