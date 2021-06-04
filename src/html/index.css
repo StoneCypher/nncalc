@@ -13,4 +13,4 @@ html, body { margin: 0; border: 0; padding: 0; }
 #renderer { left  : 0; right : 50%; white-space: pre; }
 
 #bottombar       { background-color: #eee; color: black; position: fixed; left: 0; right: 0; bottom: 0; height: 2em; line-height: 2em; }
-#bottombar.error { background-color: #fdd; color: #800; font-weight: bold; }
+#bottombar.error { background-color: #fdd; color: #800; font-weight: bold; padding: 0 0.5em; }
