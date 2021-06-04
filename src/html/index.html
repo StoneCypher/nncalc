@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+
+  <head>
+
+    <title>NN Parser</title>
+
+    <link rel="stylesheet" type="text/css" href="index.css" />
+
+    <script defer type="text/javascript" src="parser.globals.js"></script>
+    <script defer type="text/javascript">
+
+      const defaultCode = '\nnode size         : 4;\ninterconnect size : 4;\n\nlayout:\n  (1280*720),\n  200,\n  (1280*720);\n';
+
+      let editor,
+          renderer;
+
+      function byId(id) { return document.getElementById(id); }
+
+      function rerender() {
+        try {
+          renderer.innerHTML = JSON.stringify(nncalc.parse(editor.value), undefined, 2);
+        } catch (e) {
+          console.log(e);
+        }
+      }
+
+      window.onload = () => {
+
+        editor         = byId('editor'),
+        editor.value   = defaultCode;
+        editor.onkeyup = () => rerender();
+
+        renderer       = byId('renderer');
+
+        rerender();
+
+      };
+
+    </script>
+
+  </head>
+
+  <body>
+    <div id="editor_box"><textarea id="editor"></textarea></div>
+    <div id="renderer"></div>
+  </body>
+
+</html>

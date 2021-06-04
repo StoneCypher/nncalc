@@ -1,0 +1,13 @@
+
+html, body { margin: 0; border: 0; padding: 0; }
+
+#editor_box, #renderer {
+  position : fixed;
+  top      : 0;
+  bottom   : 0;
+}
+
+#editor_box         { right: 0; left: 50%; }
+#editor_box #editor { height: 100%; width: 100%; }
+
+#renderer   { left  : 0; right : 50%; white-space: pre; }

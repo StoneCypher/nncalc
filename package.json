@@ -1,12 +1,15 @@
 {
   "name": "nncalc",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "NN size calculator for fully connected feed forward networks",
   "main": "index.js",
   "scripts": {
     "clean": "rimraf -f dist/ && rimraf -f docs/ && mkdir dist && mkdir docs",
-    "pegjs": "pegjs -o dist/parser.js src/js/parser.pegjs",
-    "build": "npm run clean && npm run pegjs",
+    "pegjs_cjs": "pegjs -o dist/parser.cjs.js --format commonjs src/js/parser.pegjs",
+    "pegjs_global": "pegjs -o dist/parser.globals.js --format globals -e nncalc src/js/parser.pegjs",
+    "pegjs": "npm run pegjs_cjs && npm run pegjs_global",
+    "site": "cp src/html/.nojekyll docs && cp -r src/html/* docs && cp dist/parser.globals.js docs",
+    "build": "npm run clean && npm run pegjs && npm run site",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

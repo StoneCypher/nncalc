@@ -16,7 +16,7 @@
     }
     return interconnects;
   }
-  
+
   function compile(items) {
 
     const layout_idx        = items.find(item => item.kind === 'layout'),
@@ -31,18 +31,18 @@
           interconnect_cost = interconnects.reduce( (a,c) => a+c, 0) * interconnect_size,
           cost              = node_cost + interconnect_cost;
 
-    const res = { 
+    const res = {
       fmt: '',
-      layout, 
-      interconnects, 
-      node_size, 
+      layout,
+      interconnects,
+      node_size,
       interconnect_size,
       node_cost,
       interconnect_cost,
       cost
     };
 
-    res.fmt = `Cost: ${cost.toLocaleString()}`;
+    res.fmt = `${cost.toLocaleString()} bytes`;
 
     return res;
 
