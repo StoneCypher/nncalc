@@ -10,19 +10,33 @@
     <script defer type="text/javascript" src="parser.globals.js"></script>
     <script defer type="text/javascript">
 
-      const defaultCode = '\nnode size         : 4;\ninterconnect size : 4;\n\nlayout:\n  (1280*720),\n  200,\n  (1280*720);\n';
+      const defaultCode = '\nnode size         : 4;\ninterconnect size : 8;\n\n\n/* 64  for the board\n   2*3 for rook castle left/right, king, per side\n   1   for turn counter\n   1   for score delta favoring player 1\n   1   for en passant prev-origin */\n\nlayout:\n  64 + (2*3) + 1 + 1,\n  2000,\n  500,\n  200,\n  1;\n';
 
       let editor,
           renderer,
           bottombar;
 
-      function byId(id) { return document.getElementById(id); }
+      function byId(id)       { return document.getElementById(id); }
+      function write(id, txt) { return document.getElementById(id).innerHTML = txt; }
 
       function rerender() {
 
         try {
 
-          renderer.innerHTML  = JSON.stringify(nncalc.parse(editor.value), undefined, 2);
+          const result = nncalc.parse(editor.value);
+
+          write('output',  JSON.stringify(result, undefined, 2));
+
+          write('tcost',   `${result.cost.toLocaleString()} bytes`);
+
+          write('icost',   `${result.interconnect_cost.toLocaleString()} bytes`);
+          write('isize',   `${result.interconnect_size.toLocaleString()} bytes`);
+          write('ilayout', `${result.interconnects.map(n => n.toLocaleString()).join(' &middot; ')}`);
+
+          write('ncost',    `${result.node_cost.toLocaleString()} bytes`);
+          write('nsize',    `${result.node_size.toLocaleString()} bytes`);
+          write('nlayout',  `${result.layout.map(n => n.toLocaleString()).join(' &middot; ')}`);
+
           bottombar.innerHTML = 'Ok';
           bottombar.className = '';
 
@@ -52,9 +66,36 @@
   </head>
 
   <body>
+
+    <div id="renderer"><table>
+      <tr class="full important">
+        <th>Total cost</th><td id="tcost"></td>
+      </tr><tr>
+        <td colspan="2" class="spacer">&nbsp;</td>
+      </tr><tr class="mid important">
+        <th>Interconnect cost</th><td id="icost"></td>
+      </tr><tr>
+        <th>Interconnect size</th><td id="isize"></td>
+      </tr><tr>
+        <th>Interconnect layout</th><td id="ilayout"></td>
+      </tr><tr>
+        <td colspan="2" class="spacer">&nbsp;</td>
+      </tr><tr class="mid important">
+        <th>Node cost</th><td id="ncost"></td>
+      </tr><tr>
+        <th>Node size</th><td id="nsize"></td>
+      </tr><tr>
+        <th>Node layout</th><td id="nlayout"></td>
+      </tr><tr>
+        <td colspan="2" class="spacer">&nbsp;</td>
+      </tr><tr>
+        <th>As JSON</th><td id="output"></td>
+      </tr>
+    </table></div>
+
     <div id="editor_box"><textarea id="editor"></textarea></div>
-    <div id="renderer"></div>
     <div id="bottombar"></div>
+
   </body>
 
 </html>

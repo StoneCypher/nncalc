@@ -1,5 +1,5 @@
 
-html, body { margin: 0; border: 0; padding: 0; }
+html, body, h1 { margin: 0; border: 0; padding: 0; font-family: sans-serif; }
 
 #editor_box, #renderer {
   position : fixed;
@@ -7,10 +7,17 @@ html, body { margin: 0; border: 0; padding: 0; }
   bottom   : 2em;
 }
 
-#editor_box         { right: 0; left: 50%; }
-#editor_box #editor { height: 100%; width: 100%; }
+#editor_box         { right: 0; left: 50%; border-left: 1px solid #888; padding-left: 1rem; }
+#editor_box #editor { height: 100%; width: 100%; border: 0; outline: 0; font-size: 250%; }
 
-#renderer { left  : 0; right : 50%; white-space: pre; }
+#renderer { left  : 0; right : 50%; background-color: #f0f8ff; padding: 1em; font-size: 200%; }
 
-#bottombar       { background-color: #eee; color: black; position: fixed; left: 0; right: 0; bottom: 0; height: 2em; line-height: 2em; }
+#bottombar       { background-color: #eee; color: black; position: fixed; left: 0; right: 0; bottom: 0; height: 2em; line-height: 2em; padding: 0 0.5em; border-top: 1px solid #888; }
 #bottombar.error { background-color: #fdd; color: #800; font-weight: bold; }
+
+#output { font-family: monospace; white-space: pre; font-size: 50%; }
+
+th, td { vertical-align : top; padding-top: 0.2em; }
+th     { text-align     : right; padding-right: 0.6em; font-weight: normal; }
+
+.important th { font-weight: bold; }

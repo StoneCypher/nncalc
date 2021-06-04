@@ -52,22 +52,26 @@
 
 
 Document
-  = items:DocumentItem+ _ { return compile(items); }
+  = items:(_ DocumentItem)+ _ { return compile(items.map(i => i[1])); }
 //  = items:DocumentItem+ _ { return items; }
 
 DocumentItem
-  = LayoutStmt
+  = BlockComment
+  / LayoutStmt
   / NodeSizeStmt
   / InterconnectSizeStmt
 
+BlockComment
+  = '/*' ch:(!'*/' .)* '*/' { return ast('block comment', { val: ch.join('') }); }
+
 NodeSizeStmt
-  = _ 'node size'i _ ':' _ val:Integer _ ';' { return ast('node size', { val }); }
+  = 'node size'i _ ':' _ val:Integer _ ';' { return ast('node size', { val }); }
 
 InterconnectSizeStmt
-  = _ 'interconnect size'i _ ':' _ val:Integer _ ';' { return ast('interconnect size', { val }); }
+  = 'interconnect size'i _ ':' _ val:Integer _ ';' { return ast('interconnect size', { val }); }
 
 LayoutStmt
-  = _ 'layout'i _ ':' _ val:LayoutSequence _ ';' { return ast('layout', { val }); }
+  = 'layout'i _ ':' _ val:LayoutSequence _ ';' { return ast('layout', { val }); }
 
 LayoutSequence
   = e:Expression _ (","/"|") _ l:LayoutSequence { return [].concat(e,l); }
