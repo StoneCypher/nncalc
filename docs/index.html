@@ -13,15 +13,24 @@
       const defaultCode = '\nnode size         : 4;\ninterconnect size : 4;\n\nlayout:\n  (1280*720),\n  200,\n  (1280*720);\n';
 
       let editor,
-          renderer;
+          renderer,
+          bottombar;
 
       function byId(id) { return document.getElementById(id); }
 
       function rerender() {
+
         try {
-          renderer.innerHTML = JSON.stringify(nncalc.parse(editor.value), undefined, 2);
+
+          renderer.innerHTML  = JSON.stringify(nncalc.parse(editor.value), undefined, 2);
+          bottombar.innerHTML = 'Ok';
+          bottombar.className = '';
+
         } catch (e) {
-          console.log(e);
+
+          bottombar.innerHTML = e;
+          bottombar.className = 'error';
+
         }
       }
 
@@ -32,6 +41,7 @@
         editor.onkeyup = () => rerender();
 
         renderer       = byId('renderer');
+        bottombar      = byId('bottombar');
 
         rerender();
 
@@ -44,6 +54,7 @@
   <body>
     <div id="editor_box"><textarea id="editor"></textarea></div>
     <div id="renderer"></div>
+    <div id="bottombar"></div>
   </body>
 
 </html>
