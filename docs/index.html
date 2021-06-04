@@ -10,7 +10,7 @@
     <script defer type="text/javascript" src="parser.globals.js"></script>
     <script defer type="text/javascript">
 
-      const defaultCode = '\nnode size         : 4;\ninterconnect size : 8;\n\n\n/* 64  for the board\n   2*3 for rook castle left/right, king, per side\n   1   for turn counter\n   1   for score delta favoring player 1\n   1   for en passant prev-origin */\n\nlayout:\n  64 + (2*3) + 1 + 1,\n  2000,\n  500,\n  200,\n  1;\n';
+      const defaultCode = '\nnode size         : 4;\ninterconnect size : 8;\n\n\n/*\n  64  for the board\n  2*3 for rook castle left/right, king, per side\n  1   for turn counter\n  1   for score difference; positive favors player 0\n  1   for en passant prev-origin\n*/\n\nlayout:\n  64 + (2*3) + 1 + 1 + 1,\n  2000,\n  500,\n  200,\n  1;\n';
 
       let editor,
           renderer,
