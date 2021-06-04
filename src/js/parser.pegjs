@@ -16,20 +16,37 @@
     }
     return interconnects;
   }
-
+  
   function compile(items) {
 
-    const layout_idx = items.find(item => item.kind === 'layout');
+    const layout_idx        = items.find(item => item.kind === 'layout'),
+          node_size         = items.find(item => item.kind === 'node size')?.val         || 1,
+          interconnect_size = items.find(item => item.kind === 'interconnect size')?.val || 1;
 
     if (layout_idx === undefined) { throw new Error('No layout specified'); }
 
-    const layout        = layout_idx.val,
-          interconnects = layers_to_interconnects(layout);
+    const layout            = layout_idx.val,
+          interconnects     = layers_to_interconnects(layout),
+          node_cost         = layout.reduce(        (a,c) => a+c, 0) * node_size,
+          interconnect_cost = interconnects.reduce( (a,c) => a+c, 0) * interconnect_size,
+          cost              = node_cost + interconnect_cost;
 
-    return { layout, interconnects };
+    const res = { 
+      fmt: '',
+      layout, 
+      interconnects, 
+      node_size, 
+      interconnect_size,
+      node_cost,
+      interconnect_cost,
+      cost
+    };
+
+    res.fmt = `Cost: ${cost.toLocaleString()}`;
+
+    return res;
 
   }
-
 }
 
 
